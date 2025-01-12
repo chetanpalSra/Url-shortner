@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <style>
+        body{
+            font-family:'Times New Roman', Times, serif;
+        }
+        h1{
+            border: 2px solid black;
+            display: inline-block;
+            padding: 0 5px 0 5px;
+            margin-top: 0px;
+            color: brown;
+        }
+        h1:hover{
+            font-size: 40px;
+            background-color: black;
+            font-family:Arial, Helvetica, sans-serif;
+            color: white;
+            transition: 0.6s ease-out;
+        }
+        table,th,td{
+            border: 0.5px solid black;
+        }
+        table{
+            border-spacing: 5px;
+        }
+        td{
+            text-align: center;
+        }
+        th:hover,td:hover{
+            font-size: 12px;
+            color: white;
+            background-color: black;
+            transition: 0.7s ease-out;
+        }
+   
+    </style>
+</head>
+<body>
+    <h1>Url Shortener</h1>
+     <!-- locals store data coming from backend that are objects we are sending.  -->
+    <% if (locals.id) { %>
+       <p>URL generated: http://localhost:7010/urls/<%= id %></p>
+    <% } %>
+    <form method="POST" action="/url">
+        <label for="url">Enter an Original URL</label>
+        <input id="url" type="text" name="url" placeholder="https://example.com"/>
+        <br>
+        <button type="submit">Generate</button>
+    </form>
+   
+        <% if (locals.username) { %>
+           <div>
+            Created By:
+            <b><%= username %></b>
+           </div>
+        <% } %>
+  
+    <div>
+        <% if (locals.urls) { %>
+         <table style="margin-top: 20px; ">
+            <tr>
+          <th style="text-align: center;">S.No</th>
+          <th  style="text-align: center;">ShortId</th>
+          <th  style="text-align: center;">RedirectUrl</th>
+          <th  style="text-align: center;">Clicks</th>
+            </tr>
+          
+            <tbody>
+                <% urls.forEach((url,index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= url.shortId %></td>
+                        <td><%= url.redirectURL %></td>
+                        <td cellpadding="12px"><%= url.visitHistory.length %></td>
+                    </tr>
+                   
+                <% }) %>
+            </tbody>
+         </table>
+        <% } %>
+    </div>
+</body>
+</html> 
